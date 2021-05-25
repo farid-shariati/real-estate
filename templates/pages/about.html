@@ -1,0 +1,115 @@
+{% extends 'base.html' %} {% load static %} {% block title %} | درباره ی ما
+{%endblock %} {% block content %}
+<style>
+  body {
+    background-color: #e0af46;
+    font-family: "IranYekan";
+  }
+  #showcase-inr {
+    background-color: #e09546;
+  }
+  .pu {
+    background-color: #f55b1d;
+  }
+</style>
+<section id="showcase-inr" class="py-5 text-white">
+  <div class="container">
+    <div class="row text-center">
+      <div class="col-md-12">
+        <h1 class="display-4">درباره ی ما</h1>
+        <p class="lead">
+          سه دانشجوی عاشق کامپیوتر که امیدوار هستند سایت براتون مفید باشه
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Breadcrumb -->
+<section id="bc" class="mt-3">
+  <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="{% url 'index' %}"> <i class="fas fa-home"></i> خانه </a>
+        </li>
+        <li class="breadcrumb-item active">درباره ما</li>
+      </ol>
+    </nav>
+  </div>
+</section>
+
+<section id="about" class="py-4">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <h2 class="text-right">ما براتون بهترین خونه رو پیدا میکنیم</h2>
+        <p class="lead text-right">هدف ما رضایت شماست</p>
+        <img src="{% static 'img/about.jpg' %}" alt="درباره ما" />
+        <p class="mt-4 text-right">
+          میتونید تو سایت ما بگردید و بهترین خونه ای که فکر میکنید براتون مناسبه
+          رو انتخاب کنید و براش درخواست ارسال کنید . درخواست شما توسط مشاورین ما
+          بررسی میشه و بهتون اطلاع میدیم .
+        </p>
+      </div>
+      <div class="col-md-4">
+        {% if mvp_realtors %} {% for realtor in mvp_realtors %}
+        <div class="card">
+          <img
+            class="card-img-top"
+            src="{{ realtor.photo.url }}"
+            alt="Seller of the month"
+          />
+          <div class="card-body">
+            <h5 class="card-title">بهترین مشاور ماه</h5>
+            <h6 class="text-secondary">{{ realtor.name }}</h6>
+            <p class="card-text">{{ realtor.description }}</p>
+          </div>
+        </div>
+        {% endfor %} {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Work -->
+<section id="work" class="bg-dark text-white text-center">
+  <h2 class="display-4">ما برای شما کار میکنیم</h2>
+  <h4>دنبال خونه میگردی ؟ خب بزن بریم</h4>
+  <hr />
+  <a href="{% url 'listings' %}" class="btn pu text-white btn-lg"
+    >مشاهده ی لیست خونه ها</a
+  >
+</section>
+
+<!-- Team -->
+<section id="team" class="py-5">
+  <div class="container">
+    <h2 class="text-center mb-5">مشاورین ما</h2>
+    <div class="row text-center">
+      {% if realtors %} {% for realtor in realtors %}
+      <div class="col-md-4">
+        <img
+          src="{{ realtor.photo.url }}"
+          alt=""
+          class="rounded-circle mb-3 h-60"
+        />
+        <h4>{{ realtor.name }}</h4>
+        <p class="text-danger">
+          <i class="fas fa-award text-danger mb-3"></i> مشاور
+        </p>
+        <hr />
+        <p><i class="fas fa-phone text-danger"></i> {{ realtor.phone }}</p>
+        <p>
+          <i class="fas fa-envelope-open text-danger"></i> {{ realtor.email }}
+        </p>
+      </div>
+      {% endfor %} {% else %}
+      <div class="col-md-12">
+        <p>هیچ خونه ای موجود نیست</p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% endblock %}

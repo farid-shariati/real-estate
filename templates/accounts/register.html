@@ -1,0 +1,104 @@
+{% extends 'base.html' %} {% block title %} | ثبت نام کاربر {% endblock %}
+{%block content %}
+
+<style>
+  @font-face {
+    font-family: "IranYekan";
+    src: url("../IRANYekan.ttf") format("truetype");
+  }
+
+  body {
+    background-color: #e0af46;
+    font-family: "IranYekan";
+  }
+  .cu {
+    background-color: #ff3036;
+  }
+  .go {
+    background-color: #292f38;
+  }
+</style>
+<section id="register" class="py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 mx-auto">
+        <div class="card">
+          <div class="card-header go text-white">
+            <h6 class="text-right"><i class="fas fa-user-plus"></i> ثبت نام</h6>
+          </div>
+          <div class="card-body">
+            <!-- Alerts -->
+            {% include 'partials/_alerts.html' %}
+            <form action="{% url 'register' %}" method="POST">
+              {% csrf_token %}
+              <div class="form-group">
+                <label style="float: right;" for="first_name">نام</label>
+                <input
+                  type="text"
+                  name="first_name"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label style="float: right;" for="last_name"
+                  >نام خانوادگی</label
+                >
+                <input
+                  type="text"
+                  name="last_name"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label style="float: right;" for="username">نام کاربری</label>
+                <input
+                  type="text"
+                  name="username"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label style="float: right;" for="email">ایمیل</label>
+                <input
+                  type="email"
+                  name="email"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label style="float: right;" for="password2">رمزع عبور</label>
+                <input
+                  type="password"
+                  name="password"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label style="float: right;" for="password"
+                  >تکرار رمز عبور</label
+                >
+                <input
+                  type="password"
+                  name="password2"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <input
+                type="submit"
+                value="ثبت نام"
+                class="btn cu text-white btn-block"
+              />
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

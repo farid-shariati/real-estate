@@ -1,0 +1,165 @@
+{% extends 'base.html' %} {% load humanize %} {% block title %} | خوش آمدید
+{%endblock %} {% block content %}
+
+<style>
+  body {
+    background-color: #e0af46;
+    font-family: "IranYekan";
+  }
+  .pu {
+    background-color: #f55b1d;
+  }
+  .cu {
+    background-color: #ff3036;
+  }
+</style>
+<!-- Showcase -->
+<section id="showcase">
+  <div class="container text-center">
+    <div class="home-search p-5">
+      <div class="overlay p-5">
+        <h2 class="display-5 mb-4">
+          جستجو کن
+        </h2>
+        <p class="lead">جستجوی پیشرفته طبق معیار های دلخواه مشتری</p>
+        <div class="search">
+          <form action="{% url 'search' %}">
+            <!-- Form Row 1 -->
+            <div class="form-row">
+              <div class="col-md-4 mb-3">
+                <label class="sr-only">کلمات کلیدی</label>
+                <input
+                  type="text"
+                  name="keywords"
+                  class="form-control"
+                  placeholder="کلمات کلیدی"
+                />
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="sr-only">شهر</label>
+                <input
+                  type="text"
+                  name="city"
+                  class="form-control"
+                  placeholder="شهر"
+                />
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="sr-only">محله</label>
+                <input
+                  type="text"
+                  name="state"
+                  class="form-control"
+                  placeholder="محله"
+                />
+              </div>
+            </div>
+            <!-- Form Row 2 -->
+            <div class="form-row">
+              <div class="col-md-6 mb-3">
+                <label class="sr-only">تعداد اتاق</label>
+                <select name="bedrooms" class="form-control">
+                  <option selected="true" disabled="disabled"
+                    >تعداد اتاق ها</option
+                  >
+                  {% for key,value in bedroom_choices.items %}
+                  <option value="{{ key }}">{{ value }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="col-md-6 mb-3">
+                <select name="price" class="form-control" id="type">
+                  <option selected="true" disabled="disabled"
+                    >بیشترین قیمت</option
+                  >
+                  {% for key,value in price_choices.items %}
+                  <option value="{{ key }}">{{ value }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+            <button class="btn pu btn-block mt-4" type="submit">
+              <span class="text-white">جستجو</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<br />
+<!-- Alerts -->
+{% include 'partials/_alerts.html' %}
+
+<!-- Listings -->
+<section id="listings" class="py-5">
+  <div class="container">
+    <h3 class="text-center mb-5">اخرین خانه ها</h3>
+    <div class="row">
+      {% if listings %} {% for listing in listings %}
+      <!-- Listing 1 -->
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card listing-preview">
+          <img class="h-50" src="{{ listing.photo_main.url }}" alt="" />
+          <div class="card-img-overlay">
+            <h6>
+              <span class="badge badge-danger p-2 text-white"
+                >{{ listing.price | intcomma }} میلیون</span
+              >
+            </h6>
+          </div>
+          <div class="card-body text-center">
+            <div class="listing-heading text-center">
+              <h4 class="text-primary">{{ listing.title }}</h4>
+              <p>
+                <i class="fas fa-map-marker text-primary"></i>
+                {{ listing.city }} {{ listing.state }}, {{ listing.zipcode }}
+              </p>
+            </div>
+            <hr />
+            <div class="row py-2 text-primary">
+              <div class="col-6">
+                <i class="fas fa-th-large"></i> مساحت: {{ listing.sqft }}
+              </div>
+              <div class="col-6">
+                <i class="fas fa-car"></i> گاراژ: {{ listing.garage }}
+              </div>
+            </div>
+            <div class="row py-2 text-primary">
+              <div class="col-6">
+                <i class="fas fa-bed"></i> اتاق : {{ listing.bedrooms }}
+              </div>
+              <div class="col-6">
+                <i class="fas fa-bath"></i> حمام: {{ listing.bathrooms }}
+              </div>
+            </div>
+            <hr />
+            <div class="row py-2 text-center text-danger">
+              <div class="col-12">
+                <i class="fas fa-user"></i> {{ listing.realtor }}
+              </div>
+            </div>
+            <div class="row text-center pt-4">
+              <div class="col-12">
+                <i class="fas fa-clock"></i> {{ listing.list_date | timesince }}
+              </div>
+            </div>
+            <hr />
+            <a href="{% url 'listing' listing.id %}" class="btn btn-block cu"
+              ><span class="text-white">اطلاعات بیشتر</span></a
+            >
+          </div>
+        </div>
+      </div>
+      {% endfor %} {% else %}
+      <div class="col-md-12">
+        <p>هیچ خانه ای موجود نیست</p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% endblock %}
